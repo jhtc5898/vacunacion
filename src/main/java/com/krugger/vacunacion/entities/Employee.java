@@ -63,10 +63,12 @@ public class Employee implements Serializable
    @Column(name = "vaccinated_descripction", length = 20)
    private String vaccinated_descripction;
 
-   @Comment("Fecha De Nacimiento")
-   @Temporal(TemporalType.TIME)
+   @Comment("Employee date birth")
+   @Temporal(TemporalType.DATE)
    @Column(name = "date_birth")
    private Date date_birth;
+
+
 
 
 }

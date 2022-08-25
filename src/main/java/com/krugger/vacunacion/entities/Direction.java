@@ -46,8 +46,12 @@ public class Direction implements Serializable
    @Column(name = "country", length = 30, nullable = false)
    private String country;
 
+   @Comment("Direction status:  1 = Active  2 =Disabled  ")
+   @Column(name = "status", length = 1, nullable = false)
+   private Boolean status;
+
    @ManyToOne
-   @JoinColumn(name = "id_employe")
+   @JoinColumn(name = "id_employe", nullable = false)
    private Employee id_employe;
 
 

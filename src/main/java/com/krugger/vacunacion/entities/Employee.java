@@ -1,8 +1,6 @@
 package com.krugger.vacunacion.entities;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -12,9 +10,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @Entity
-@Getter
-@Setter
-@ToString
+@Data
 @Table(name = "vac_temployee") //manejamos acronimo: 'vac'= esquema  y 'T' = Tabla
 public class Employee implements Serializable
 {

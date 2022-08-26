@@ -51,6 +51,10 @@ public class Employee implements Serializable
    @Column(name = "status", length = 1, nullable = false)
    private Boolean status;
 
+   @Comment("Employe gender:   M =Masculino F = Femenino")
+   @Column(name = "gender", length = 1, nullable = false)
+   private String gender;
+
    @Comment("Description status employee ")
    @Column(name = "status_descripction", length = 20)
    private String status_descripction;

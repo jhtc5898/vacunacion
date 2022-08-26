@@ -33,6 +33,7 @@ public class EmployeeImplementation implements EmployeeService {
         employee.setStatus(Boolean.TRUE);
         employee.setStatus_vaccinated(Boolean.TRUE);
         employee.setVaccinated_descripction("Vacunado");
+        System.out.println(employee);
         employeeRepository.save(employee);
 
         return employee;

@@ -72,5 +72,13 @@ public class Employee implements Serializable {
         this.email = email;
     }
 
-
+    public Employee(UUID id, String identification_card, String first_name, String second_name, String first_surname, String second_surname, String email) {
+        this.id = id;
+        this.identification_card = identification_card;
+        this.first_name = first_name;
+        this.second_name = second_name;
+        this.first_surname = first_surname;
+        this.second_surname = second_surname;
+        this.email = email;
+    }
 }

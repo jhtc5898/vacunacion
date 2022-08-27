@@ -2,14 +2,15 @@ package com.krugger.vacunacion.Utils;
 
 import com.krugger.vacunacion.entities.Authenticator;
 import com.krugger.vacunacion.entities.Employee;
+import com.krugger.vacunacion.entities.Role;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import java.security.SecureRandom;
 import java.util.Random;
 
 public class Util {
-    public static final Authenticator generateAutheticator(Employee employee) {
-        Authenticator authenticator = new Authenticator(generateNickName(employee), generatedPassword(employee), employee);
+    public static final Authenticator generateAutheticator(Employee employee,Role rol) {
+        Authenticator authenticator = new Authenticator(generateNickName(employee), generatedPassword(employee), employee,rol);
         return authenticator;
 
     }

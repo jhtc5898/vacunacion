@@ -5,6 +5,7 @@ import lombok.Data;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.GenericGenerator;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.UUID;
@@ -39,10 +40,18 @@ public class Authenticator implements Serializable {
     @JoinColumn(name = "id_employee")
     private Employee employee;
 
+    @ManyToOne
+    @JoinColumn(name = "id_role")
+    private Role role;
 
-    public Authenticator(String nickname, String password, Employee employee) {
+    public Authenticator(String nickname, String password, Employee employee,Role rol) {
         this.nickname = nickname;
         this.password = password;
         this.employee = employee;
+        this.role=rol;
+    }
+
+    public Authenticator() {
+
     }
 }

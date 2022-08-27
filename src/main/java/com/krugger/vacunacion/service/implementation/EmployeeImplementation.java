@@ -3,18 +3,24 @@ package com.krugger.vacunacion.service.implementation;
 import com.krugger.vacunacion.controller.entitiesControllers.EmployeeContr;
 import com.krugger.vacunacion.entities.Authenticator;
 import com.krugger.vacunacion.entities.Employee;
+import com.krugger.vacunacion.entities.Role;
 import com.krugger.vacunacion.exceptions.ErrorRequest;
 import com.krugger.vacunacion.repository.AuthenticatorRepository;
 import com.krugger.vacunacion.repository.EmployeeRepository;
+import com.krugger.vacunacion.repository.RoleRepository;
 import com.krugger.vacunacion.service.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import static com.krugger.vacunacion.Utils.Constants.CODE_ERROR_INTERNAL;
+import static com.krugger.vacunacion.Utils.Parameters.EMPLOYEE;
 import static com.krugger.vacunacion.Utils.Util.generateAutheticator;
 import static com.krugger.vacunacion.service.mapping.EmployeeMapping.mappingEmployee;
 
@@ -26,6 +32,8 @@ public class EmployeeImplementation implements EmployeeService {
     EmployeeRepository employeeRepository;
     @Autowired
     AuthenticatorRepository authenticatorRepository;
+    @Autowired
+    RoleRepository roleRepository;
 
     @Override
     public List<Employee> findAll() {
@@ -39,8 +47,10 @@ public class EmployeeImplementation implements EmployeeService {
             Employee employee = mappingEmployee(employeeContr);
             log.info(employee.toString());
             employeeRepository.save(employee);
-            Authenticator auth = generateAutheticator(employee);
+            Role rol =roleRepository.findByNameAndStatus(EMPLOYEE,Boolean.TRUE);
+            Authenticator auth = generateAutheticator(employee,rol);
             authenticatorRepository.save(auth);
+
             return auth;
         } catch (Exception e) {
             log.warn(employeeContr.toString());

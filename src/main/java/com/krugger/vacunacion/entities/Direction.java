@@ -11,48 +11,47 @@ import java.util.UUID;
 @Entity
 @Data
 @Table(name = "vac_tdirection") //Manejamos acronimo: 'vac'= esquema  y 'T' = Tabla
-public class Direction implements Serializable
-{
-   private static final long serialVersionUUID = 1L;
+public class Direction implements Serializable {
+    private static final long serialVersionUUID = 1L;
 
-   @Id
-   @GeneratedValue(generator = "UUID")
-   @GenericGenerator(name = "pk_direction", strategy = "org.hibernate.id.UUIDGenerator ")
-   @Comment("identifier primary key")
-   @Column(name = "id", nullable = false)
-   private UUID id;
+    @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "pk_direction", strategy = "org.hibernate.id.UUIDGenerator ")
+    @Comment("identifier primary key")
+    @Column(name = "id", nullable = false)
+    private UUID id;
 
-   @Comment("Primary street employee ")
-   @Column(name = "primary_street", length = 20, columnDefinition = "varchar(20) default 'N/A' ")
-   private String primary_street;
+    @Comment("Primary street employee ")
+    @Column(name = "primary_street", length = 20, columnDefinition = "varchar(20) default 'N/A' ")
+    private String primary_street;
 
-   @Comment("Secondary street employee ")
-   @Column(name = "secondary_street", length = 20, columnDefinition = "varchar(20) default 'N/A' ")
-   private String secondary_street;
+    @Comment("Secondary street employee ")
+    @Column(name = "secondary_street", length = 20, columnDefinition = "varchar(20) default 'N/A' ")
+    private String secondary_street;
 
-   @Comment("Employed postal code ")
-   @Column(name = "postal_code", length = 20, columnDefinition = "varchar(20) default 'N/A' ")
-   private String postal_code;
+    @Comment("Employed postal code ")
+    @Column(name = "postal_code", length = 20, columnDefinition = "varchar(20) default 'N/A' ")
+    private String postal_code;
 
-   @Comment("City where the employee resides ")
-   @Column(name = "city", length = 20, nullable = false)
-   private String city;
+    @Comment("City where the employee resides ")
+    @Column(name = "city", length = 20, nullable = false)
+    private String city;
 
-   @Comment("Province where the employee resides ")
-   @Column(name = "province", length = 20, nullable = false)
-   private String province;
+    @Comment("Province where the employee resides ")
+    @Column(name = "province", length = 20, nullable = false)
+    private String province;
 
-   @Comment("Country where the employee resides ")
-   @Column(name = "country", length = 30, nullable = false)
-   private String country;
+    @Comment("Country where the employee resides ")
+    @Column(name = "country", length = 30, nullable = false)
+    private String country;
 
-   @Comment("Direction status:  1 = Active  2 =Disabled  ")
-   @Column(name = "status", length = 1, nullable = false)
-   private Boolean status;
+    @Comment("Direction status:  1 = Active  2 =Disabled  ")
+    @Column(name = "status", length = 1, nullable = false)
+    private Boolean status;
 
-   @ManyToOne
-   @JoinColumn(name = "id_employe", nullable = false)
-   private Employee id_employe;
+    @ManyToOne
+    @JoinColumn(name = "id_employe", nullable = false)
+    private Employee id_employe;
 
 
 }

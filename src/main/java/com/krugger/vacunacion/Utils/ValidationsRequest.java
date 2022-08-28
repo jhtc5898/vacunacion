@@ -14,21 +14,38 @@ import static com.krugger.vacunacion.Utils.Parameters.DATE_FORMAT;
 
 public class ValidationsRequest {
 
-    public static final Boolean validation_request(AddEmployeePojo employeePojo) {
 
-        if (validateIdentification(
-                employeePojo.getIdentification_card()) &&
-                validateMail(employeePojo.getEmail()) &&
-                validateName(
-                        employeePojo.getFirst_name() +
-                                employeePojo.getSecond_name() +
-                                employeePojo.getFirst_surname() +
-                                employeePojo.getSecond_surname())
+    public static final Boolean validation_request(AddEmployeePojo employeePojo) {
+        try {
+            if (validate_entity(employeePojo)) {
+                return validateIdentification(employeePojo.getIdentification_card()) &&
+                        validateMail(employeePojo.getEmail()) &&
+                        validateName(
+                                employeePojo.getFirst_name() +
+                                        employeePojo.getSecond_name() +
+                                        employeePojo.getFirst_surname() +
+                                        employeePojo.getSecond_surname()
+                        );
+            }
+            return false;
+        } catch (Exception e
         ) {
-            return true;
+            return false;
         }
-        return false;
+
+
     }
+
+    public static final Boolean validate_entity(AddEmployeePojo addEmployeePojo) {
+
+        return !addEmployeePojo.getIdentification_card().isEmpty() ||
+                !addEmployeePojo.getFirst_name().isEmpty() ||
+                !addEmployeePojo.getSecond_name().isEmpty() ||
+                !addEmployeePojo.getFirst_surname().isEmpty() ||
+                !addEmployeePojo.getSecond_surname().isEmpty() ||
+                !addEmployeePojo.getEmail().isEmpty();
+    }
+
 
     public static final Boolean validation_request(UpdateEmployeePojo employeePojo) {
         if (validateDate(employeePojo.getDate_birth()) && validateIdentification(employeePojo.getIdentification_card())) {
@@ -51,30 +68,24 @@ public class ValidationsRequest {
 
         Pattern pat = Pattern.compile("^[a-zA-Z]*$");
         Matcher mat = pat.matcher(name);
-        if (mat.matches()) {
-            return true;
-        } else {
-            return false;
-        }
+        return mat.matches();
     }
 
     public static final Boolean validateMail(String mail) {
-        Pattern pattern = Pattern
-                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
-        Matcher mather = pattern.matcher(mail);
-        if (mather.find() == true) {
-            return true;
-        } else {
+        try {
+            Pattern pattern = Pattern
+                    .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+            Matcher mather = pattern.matcher(mail);
+            return mather.find() == true;
+        } catch (Exception e) {
             return false;
         }
+
     }
 
     public static final Boolean validateIdentification(String identification_card) {
-        if (identification_card.length() == IDENTIFICACTION_SIZE) {
-            return true;
-        }
-        return false;
+        return identification_card.length() == IDENTIFICACTION_SIZE;
     }
 
     public static final Boolean validateDate(String date) {

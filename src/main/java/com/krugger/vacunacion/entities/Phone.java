@@ -1,5 +1,6 @@
 package com.krugger.vacunacion.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.GenericGenerator;
@@ -38,8 +39,9 @@ public class Phone implements Serializable {
     private Boolean status;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "id_employee", nullable = false)
-    private Employee id_employee;
+    private Employee idemployee;
 
 
 }

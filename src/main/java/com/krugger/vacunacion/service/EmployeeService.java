@@ -1,18 +1,24 @@
 package com.krugger.vacunacion.service;
 
 
-import com.krugger.vacunacion.entities.Employee;
 import com.krugger.vacunacion.pojo.admin.AddEmployeePojo;
+import com.krugger.vacunacion.pojo.admin.EditInformationPojo;
 import com.krugger.vacunacion.pojo.employee.UpdateEmployeePojo;
 import com.krugger.vacunacion.pojo.employee.VaccineEmployeePojo;
 
 import java.text.ParseException;
-import java.util.List;
 
 
 public interface EmployeeService {
 
-    List<Employee> findAll();
+
+    Object findAllByStatus();
+
+    Object informationEmployee(String identification);
+
+    Object editInformationEmployee(EditInformationPojo editInformationPojo);
+
+    Object deleteLogicEmployee(String identification);
 
     Object saveEmployee(AddEmployeePojo employeePojo);
 

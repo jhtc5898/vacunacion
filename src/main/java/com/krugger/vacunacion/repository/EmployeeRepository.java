@@ -9,7 +9,8 @@ import java.util.List;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Serializable> {
-    List<Employee> findAll();
+
+    List<Employee> findAllByStatus(Boolean status);
 
     Employee findByIdentificationCard(String identification);
 

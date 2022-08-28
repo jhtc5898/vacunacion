@@ -1,36 +1,28 @@
 package com.krugger.vacunacion.pojo.admin;
 
 
-import lombok.Builder;
 import lombok.Data;
-import lombok.With;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Data
-@Builder
 public class AddEmployeePojo {
-    @Size(min = 10, max = 10, message = "About Me must be between 10 and 10 characters")
-    @With
+    @NotNull(message = "The identification card not null")
     private String identification_card;
 
-    @With
+    @NotNull(message = "The first name not null")
     private String first_name;
 
-    @With
+    @NotNull(message = "The second name card not null")
     private String second_name;
 
-    @With
+    @NotNull(message = "The first surname not null")
     private String first_surname;
 
-    @With
+    @NotNull(message = "The second name card not null")
     private String second_surname;
 
-    @NotNull(message = "The identification card not null")
-    @Email(message = "Email should be valid")
-    @With
+    @NotNull(message = "The Email not null")
     private String email;
 
 

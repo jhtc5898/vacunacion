@@ -3,12 +3,14 @@ package com.krugger.vacunacion.service.implementation;
 import com.krugger.vacunacion.entities.*;
 import com.krugger.vacunacion.exceptions.ErrorRequest;
 import com.krugger.vacunacion.pojo.admin.AddEmployeePojo;
+import com.krugger.vacunacion.pojo.admin.EditInformationPojo;
 import com.krugger.vacunacion.pojo.employee.UpdateEmployeePojo;
 import com.krugger.vacunacion.pojo.employee.VaccineEmployeePojo;
 import com.krugger.vacunacion.repository.*;
 import com.krugger.vacunacion.service.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -44,8 +46,62 @@ public class EmployeeImplementation implements EmployeeService {
     VaccineRepository vaccineRepository;
 
     @Override
-    public List<Employee> findAll() {
-        return findAll();
+    public Object findAllByStatus() {
+        if (!employeeRepository.findAllByStatus(Boolean.TRUE).isEmpty()) {
+            return employeeRepository.findAllByStatus(Boolean.TRUE);
+        }
+        return ResponseEntity.ok().body("Sin Informacion");
+
+    }
+
+    public Object informationEmployee(String identification) {
+        List<Object> resp = new ArrayList<>();
+        if (employeeRepository.findByIdentificationCard(identification) != null) {
+            Employee empl = employeeRepository.findByIdentificationCard(identification);
+            resp.add(empl);
+            if (!directionRepository.findAllByIdemploye(empl.getId()).isEmpty()) {
+                resp.add(directionRepository.findAllByIdemploye(empl.getId()));
+            } else {
+                resp.add("Sin Direcciones Agregadas");
+            }
+
+            if (!phoneRepository.findAllByIdemploye(empl.getId()).isEmpty()) {
+                List<Phone> lisPhone = phoneRepository.findAllByIdemploye(empl.getId());
+                resp.add(lisPhone);
+            } else {
+                resp.add("Sin Phones Agregados");
+            }
+            return resp;
+        }
+        return ResponseEntity.ok().body("Sin Informacion");
+    }
+
+
+    public Object deleteLogicEmployee(String identification) {
+        if (employeeRepository.findByIdentificationCard(identification) != null) {
+            Employee employee = employeeRepository.findByIdentificationCard(identification);
+            employee.setStatus(Boolean.FALSE);
+            employeeRepository.save(employee);
+            return employee;
+        }
+        return ResponseEntity.ok().body(NOT_EMPLOYEE);
+
+    }
+
+
+    @Transactional
+    public Object editInformationEmployee(EditInformationPojo editInformationPojo) {
+        //Buscamos el empleado
+        if (employeeRepository.findByIdentificationCard(editInformationPojo.getIdentification_card()) != null) {
+            Employee employee = employeeRepository.findByIdentificationCard(editInformationPojo.getIdentification_card());
+            employee.setId(employee.getId());
+            employee.setEmail(editInformationPojo.getEmail());
+            employee.setStatusvaccinated(editInformationPojo.getStatusVaccine());
+            employeeRepository.save(employee);
+            return employee;
+        }
+        return ResponseEntity.ok().body(NOT_EMPLOYEE);
+
     }
 
     @Override
@@ -93,16 +149,22 @@ public class EmployeeImplementation implements EmployeeService {
     @Transactional
     public Object addVaccineEmployee(VaccineEmployeePojo vaccineEmployeePojo) {
         try {
-            Employee employee = employeeRepository.findByIdentificationCard(vaccineEmployeePojo.getIdentification_card());
-            TipeVaccine tipeVaccine = tipeVaccineRepository.findByNamevaccine(vaccineEmployeePojo.getNameVaccine());
-            Vaccine vaccine = new Vaccine();
-            vaccine.setEmployee(employee);
-            vaccine.setTipeVaccine(tipeVaccine);
-            vaccine.setDate_vaccine(new SimpleDateFormat("dd/MM/yyyy").parse(vaccineEmployeePojo.getDateVaccine()));
-            vaccine.setNumber_doses(vaccineEmployeePojo.getDosis());
-            vaccineRepository.save(vaccine);
+            if (employeeRepository.findByIdentificationCard(vaccineEmployeePojo.getIdentification_card()) != null) {
+                Employee employee = employeeRepository.findByIdentificationCard(vaccineEmployeePojo.getIdentification_card());
+                if (tipeVaccineRepository.findByNamevaccine(vaccineEmployeePojo.getNameVaccine()) != null) {
+                    TipeVaccine tipeVaccine = tipeVaccineRepository.findByNamevaccine(vaccineEmployeePojo.getNameVaccine());
+                    Vaccine vaccine = new Vaccine();
+                    vaccine.setEmployee(employee);
+                    vaccine.setTipeVaccine(tipeVaccine);
+                    vaccine.setDate_vaccine(new SimpleDateFormat("dd/MM/yyyy").parse(vaccineEmployeePojo.getDateVaccine()));
+                    vaccine.setNumber_doses(vaccineEmployeePojo.getDosis());
+                    vaccineRepository.save(vaccine);
+                    return vaccine;
+                }
+                return ResponseEntity.badRequest().body("Correctly enter the type of vaccine");
 
-            return null;
+            }
+            return ResponseEntity.badRequest().body("No Related Employee Found");
         } catch (Exception e) {
             log.warn(vaccineEmployeePojo.toString());
             ErrorRequest errorRequest = new ErrorRequest(e.getCause().getCause().getMessage(), CODE_ERROR_INTERNAL, e.getCause());
@@ -118,15 +180,30 @@ public class EmployeeImplementation implements EmployeeService {
     }
 
     public Object getNameVaccineEmployee(String name) {
-        return vaccineRepository.findAll();
+        if (tipeVaccineRepository.findByNamevaccine(name) != null) {
+            TipeVaccine tipe = tipeVaccineRepository.findByNamevaccine(name);
+            if (!vaccineRepository.findAllByTipeVaccine(tipe.getId()).isEmpty()) {
+                List<Vaccine> listvac = vaccineRepository.findAllByTipeVaccine(tipe.getId());
+                return listvac;
+            } else {
+                return ResponseEntity.badRequest().body(NOT_INFORMATION);
+            }
+        } else {
+            return ResponseEntity.badRequest().body(NOT_TYPE);
+        }
+
+
     }
 
     public Object getDateVaccineEmployee(String dateinit, String datefin) throws ParseException {
 
-
         Date init = parseDate(dateinit);
         Date fin = parseDate(datefin);
-        return vaccineRepository.findDateEmployee(init, fin);
+        if (!vaccineRepository.findDateEmployee(init, fin).isEmpty()) {
+            return vaccineRepository.findDateEmployee(init, fin);
+        }
+        return ResponseEntity.badRequest().body(NOT_DATE_REQUEST);
+
     }
 
 
@@ -142,7 +219,7 @@ public class EmployeeImplementation implements EmployeeService {
 
     public Direction saveDirection(UpdateEmployeePojo updateEmployeePojo, Employee employee) {
         Direction direction = new Direction();
-        direction.setId_employe(employee);
+        direction.setIdemploye(employee);
         direction.setPrimary_street(updateEmployeePojo.getDirection().getPrimary_street());
         direction.setSecondary_street(updateEmployeePojo.getDirection().getSecondary_street());
         direction.setPostal_code(updateEmployeePojo.getDirection().getPostal_code());
@@ -156,7 +233,7 @@ public class EmployeeImplementation implements EmployeeService {
 
     public Phone savePhone(UpdateEmployeePojo updateEmployeePojo, Employee employee) {
         Phone phone = new Phone();
-        phone.setId_employee(employee);
+        phone.setIdemployee(employee);
         phone.setPhone_priority(updateEmployeePojo.getPhone().getPhone_priority());
         phone.setPhone_priority_operator(updateEmployeePojo.getPhone().getPhone_priority_operator());
         phone.setPhone_home(updateEmployeePojo.getPhone().getPhone_home());

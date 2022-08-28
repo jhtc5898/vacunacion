@@ -1,5 +1,6 @@
 package com.krugger.vacunacion.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.GenericGenerator;
@@ -50,8 +51,9 @@ public class Direction implements Serializable {
     private Boolean status;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "id_employe", nullable = false)
-    private Employee id_employe;
+    private Employee idemploye;
 
 
 }

@@ -5,7 +5,6 @@ import com.krugger.vacunacion.repository.AuthenticatorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -52,7 +51,7 @@ public class SecurityConfig {
 
         http.csrf().disable().authorizeRequests()
                 //.antMatchers(HttpMethod.POST, "/admin/*").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/admin/addEmployee").hasRole("ADMIN")
+                //.antMatchers(HttpMethod.POST, "/admin/addEmployee").hasRole("ADMIN")
                 //.antMatchers("/cliente/*").hasAnyRole("ADMIN", "OPERATOR")
                 //.antMatchers(HttpMethod.PUT, "/curso").authenticated()
                 .antMatchers("/listarP").authenticated()

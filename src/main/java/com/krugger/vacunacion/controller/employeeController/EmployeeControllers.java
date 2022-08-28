@@ -4,6 +4,8 @@ import com.krugger.vacunacion.exceptions.ErrorRequest;
 import com.krugger.vacunacion.pojo.employee.UpdateEmployeePojo;
 import com.krugger.vacunacion.pojo.employee.VaccineEmployeePojo;
 import com.krugger.vacunacion.service.EmployeeService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +20,30 @@ import static com.krugger.vacunacion.exceptions.ErrorValidate.errorValidate;
 @RestController
 @RequestMapping("employee/")
 @CrossOrigin(origins = "*")
-public class UpdateEmployeeControllers {
+public class EmployeeControllers {
 
     @Autowired
     private EmployeeService employeeService;
+
+    /**
+     * Get employee information
+     *
+     * @param identification
+     * @return
+     */
+    @Operation(summary = "Get employee information",
+            responses = {
+                    @ApiResponse(responseCode = "600", description = "Exepcion Internal")})
+    @GetMapping(value = "/informationEmployee")
+    public ResponseEntity<Object> informationEmployee(@RequestParam("identification") String identification) {
+        try {
+            return ResponseEntity.badRequest().body(employeeService.informationEmployee(identification));
+        } catch (Exception e) {
+            ErrorRequest errorRequest = new ErrorRequest(e.getCause().getCause().getMessage(), CODE_ERROR_INTERNAL, e.getCause());
+            return ResponseEntity.internalServerError().body(errorRequest);
+        }
+    }
+
 
     @PostMapping(value = "/updateEmployee")
     public ResponseEntity<Object> updateEmployee(@Valid @ParameterObject @RequestBody UpdateEmployeePojo updateEmployeePojo) {

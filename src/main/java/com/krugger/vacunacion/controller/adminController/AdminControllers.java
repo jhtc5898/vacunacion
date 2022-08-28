@@ -141,7 +141,7 @@ public class AdminControllers {
             responses = {
                     @ApiResponse(responseCode = "600", description = "Exepcion Internal")})
     @GetMapping(value = "/employeeVaccinatedType")
-    public ResponseEntity<Object> employeeVaccinatedType(@RequestParam("type") String name) {
+    public ResponseEntity<Object> employeeVaccinatedType(@RequestParam("nameVaccine") String name) {
         try {
             return ResponseEntity.badRequest().body(employeeService.getNameVaccineEmployee(name));
         } catch (Exception e) {

@@ -77,6 +77,7 @@ public class EmployeeImplementation implements EmployeeService {
     }
 
 
+    @Transactional
     public Object deleteLogicEmployee(String identification) {
         if (employeeRepository.findByIdentificationCard(identification) != null) {
             Employee employee = employeeRepository.findByIdentificationCard(identification);
@@ -206,7 +207,7 @@ public class EmployeeImplementation implements EmployeeService {
 
     }
 
-
+    @Transactional
     public Employee updateInfoEmployee(UpdateEmployeePojo updateEmployeePojo) throws ParseException {
         Employee employee = employeeRepository.findByIdentificationCard(updateEmployeePojo.getIdentification_card());
         employee.setId(employee.getId());
@@ -216,6 +217,7 @@ public class EmployeeImplementation implements EmployeeService {
         return employee;
 
     }
+
 
     public Direction saveDirection(UpdateEmployeePojo updateEmployeePojo, Employee employee) {
         Direction direction = new Direction();
@@ -230,6 +232,7 @@ public class EmployeeImplementation implements EmployeeService {
         directionRepository.save(direction);
         return direction;
     }
+
 
     public Phone savePhone(UpdateEmployeePojo updateEmployeePojo, Employee employee) {
         Phone phone = new Phone();

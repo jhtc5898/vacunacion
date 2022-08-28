@@ -1,5 +1,6 @@
 package com.krugger.vacunacion.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.GenericGenerator;
@@ -16,6 +17,7 @@ public class TipeVaccine implements Serializable {
     private static final long serialVersionUUID = 1L;
 
     @Id
+    @JsonIgnore
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "pk_tipe_vaccine", strategy = "org.hibernate.id.UUIDGenerator ")
     @Comment("identifier primary key")

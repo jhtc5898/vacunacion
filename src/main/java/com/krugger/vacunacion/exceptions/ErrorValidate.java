@@ -2,6 +2,7 @@ package com.krugger.vacunacion.exceptions;
 
 import com.krugger.vacunacion.pojo.admin.AddEmployeePojo;
 import com.krugger.vacunacion.pojo.employee.UpdateEmployeePojo;
+import com.krugger.vacunacion.pojo.employee.VaccineEmployeePojo;
 import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
@@ -39,5 +40,13 @@ public class ErrorValidate {
         return ResponseEntity.badRequest().body(listErrorRequest);
 
     }
+
+//    public static ResponseEntity<Object> errorValidate(VaccineEmployeePojo vaccineEmployeePojo) {
+//        List<ErrorRequest> listErrorRequest = new ArrayList<>();
+//        if (!validateDate(vaccineEmployeePojo)) {
+//            listErrorRequest.add(new ErrorRequest(DESCRIPTION_ERROR_DATE, CODE_ERROR_DATE));
+//        }
+//        return ResponseEntity.badRequest().body(listErrorRequest);
+//    }
 
 }

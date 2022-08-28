@@ -22,9 +22,13 @@ public class Vaccine implements Serializable {
     @Column(name = "id", nullable = false)
     private UUID id;
 
-    @Comment("Employee vaccine name ")
-    @Column(name = "name", length = 20, nullable = false)
-    private String name;
+    @ManyToOne
+    @JoinColumn(name = "id_employee")
+    private Employee employee;
+
+    @ManyToOne
+    @JoinColumn(name = "id_tipe_vaccine")
+    private TipeVaccine tipeVaccine;
 
     @Comment("Employee date vaccine")
     @Temporal(TemporalType.DATE)

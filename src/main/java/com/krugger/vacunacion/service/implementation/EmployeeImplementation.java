@@ -4,7 +4,9 @@ import com.krugger.vacunacion.entities.*;
 import com.krugger.vacunacion.exceptions.ErrorRequest;
 import com.krugger.vacunacion.pojo.admin.AddEmployeePojo;
 import com.krugger.vacunacion.pojo.employee.UpdateEmployeePojo;
+import com.krugger.vacunacion.pojo.employee.VaccineEmployeePojo;
 import com.krugger.vacunacion.repository.*;
+import com.krugger.vacunacion.repository.TipeVaccineRepository;
 import com.krugger.vacunacion.service.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.krugger.vacunacion.Utils.Constants.CODE_ERROR_INTERNAL;
+import static com.krugger.vacunacion.Utils.Constants.*;
 import static com.krugger.vacunacion.Utils.Parameters.EMPLOYEE;
 import static com.krugger.vacunacion.Utils.Util.generateAutheticator;
 import static com.krugger.vacunacion.service.mapping.EmployeeMapping.mappingEmployee;
@@ -35,6 +37,10 @@ public class EmployeeImplementation implements EmployeeService {
     PhoneRepository phoneRepository;
     @Autowired
     RoleRepository roleRepository;
+    @Autowired
+    TipeVaccineRepository tipeVaccineRepository;
+    @Autowired
+    VaccineRepository vaccineRepository;
 
     @Override
     public List<Employee> findAll() {
@@ -67,15 +73,37 @@ public class EmployeeImplementation implements EmployeeService {
             Employee employee = updateInfoEmployee(updateEmployeePojo);
             Direction direction = saveDirection(updateEmployeePojo, employee);
             Phone phone = savePhone(updateEmployeePojo, employee);
+            String respVaccine = messageVaccine(updateEmployeePojo);
 
             //Retornamos todos los campos guardados. En el caso del popup con esta informacion
             List<Object> listresp = new ArrayList<>();
+            listresp.add(respVaccine);
             listresp.add(employee);
             listresp.add(direction);
             listresp.add(phone);
             return listresp;
         } catch (Exception e) {
             log.warn(updateEmployeePojo.toString());
+            ErrorRequest errorRequest = new ErrorRequest(e.getCause().getCause().getMessage(), CODE_ERROR_INTERNAL, e.getCause());
+            return errorRequest;
+        }
+    }
+
+    @Transactional
+    public Object addVaccineEmployee(VaccineEmployeePojo vaccineEmployeePojo) {
+        try {
+            Employee employee = employeeRepository.findByIdentificationCard(vaccineEmployeePojo.getIdentification_card());
+            TipeVaccine tipeVaccine = tipeVaccineRepository.findByNamevaccine(vaccineEmployeePojo.getNameVaccine());
+            Vaccine vaccine = new Vaccine();
+            vaccine.setEmployee(employee);
+            vaccine.setTipeVaccine(tipeVaccine);
+            vaccine.setDate_vaccine( new SimpleDateFormat("dd/MM/yyyy").parse(vaccineEmployeePojo.getDateVaccine()));
+            vaccine.setNumber_doses(vaccineEmployeePojo.getDosis());
+            vaccineRepository.save(vaccine);
+
+            return null;
+        } catch (Exception e) {
+            log.warn(vaccineEmployeePojo.toString());
             ErrorRequest errorRequest = new ErrorRequest(e.getCause().getCause().getMessage(), CODE_ERROR_INTERNAL, e.getCause());
             return errorRequest;
         }
@@ -116,4 +144,13 @@ public class EmployeeImplementation implements EmployeeService {
         return phone;
     }
 
+    public String messageVaccine(UpdateEmployeePojo updateEmployeePojo)
+    {
+        if(updateEmployeePojo.getStatus_vaccine()==Boolean.TRUE)
+        {
+            return  MESSAGE_VACCINE;
+        }
+        return MESSAGE_NOT_VACCINE;
+
+    }
 }

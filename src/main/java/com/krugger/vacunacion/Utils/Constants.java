@@ -15,4 +15,8 @@ public class Constants {
     public static final int CODE_ERROR_DATE = 603;
     public static final String DESCRIPTION_ERROR_DATE = "Validate Date Format (dd/mm/yyyy)";
 
+    public static final String MESSAGE_VACCINE = "Employee save vaccine";
+
+    public static final String MESSAGE_NOT_VACCINE = "Unvaccinated employee";
+
 }

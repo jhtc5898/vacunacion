@@ -2,6 +2,7 @@ package com.krugger.vacunacion.Utils;
 
 import com.krugger.vacunacion.pojo.admin.AddEmployeePojo;
 import com.krugger.vacunacion.pojo.employee.UpdateEmployeePojo;
+import com.krugger.vacunacion.pojo.employee.VaccineEmployeePojo;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,6 +34,14 @@ public class ValidationsRequest {
             return Boolean.TRUE;
         }
         return false;
+
+    }
+
+    public static final Boolean validation_request(VaccineEmployeePojo vaccineEmployeePojo) {
+        if ( validateDate(vaccineEmployeePojo.getDateVaccine()) && vaccineEmployeePojo.getNameVaccine() != null && vaccineEmployeePojo.getDosis() != 0){
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
 
     }
 

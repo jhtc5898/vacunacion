@@ -2,6 +2,7 @@ package com.krugger.vacunacion.controller.employeeController;
 
 import com.krugger.vacunacion.exceptions.ErrorRequest;
 import com.krugger.vacunacion.pojo.employee.UpdateEmployeePojo;
+import com.krugger.vacunacion.pojo.employee.VaccineEmployeePojo;
 import com.krugger.vacunacion.service.EmployeeService;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +35,20 @@ public class UpdateEmployeeControllers {
             return ResponseEntity.internalServerError().body(errorRequest);
         }
     }
+
+    @PostMapping(value = "/addEmployeeVaccine")
+    public ResponseEntity<Object> addEmployeeVaccine(@Valid @ParameterObject @RequestBody VaccineEmployeePojo vaccineEmployeePojo) {
+        try {
+            if (validation_request(vaccineEmployeePojo) != false) {
+                return ResponseEntity.badRequest().body(employeeService.addVaccineEmployee(vaccineEmployeePojo));
+            }
+            return null;
+        } catch (Exception e) {
+            ErrorRequest errorRequest = new ErrorRequest(e.getCause().getCause().getMessage(), CODE_ERROR_INTERNAL, e.getCause());
+            return ResponseEntity.internalServerError().body(errorRequest);
+        }
+    }
+
+
 
 }

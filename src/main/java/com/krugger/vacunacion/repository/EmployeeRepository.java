@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 import java.util.List;
+
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Serializable> {
     List<Employee> findAll();

@@ -9,8 +9,8 @@ import java.security.SecureRandom;
 import java.util.Random;
 
 public class Util {
-    public static final Authenticator generateAutheticator(Employee employee,Role rol) {
-        Authenticator authenticator = new Authenticator(generateNickName(employee), generatedPassword(employee), employee,rol);
+    public static final Authenticator generateAutheticator(Employee employee, Role rol) {
+        Authenticator authenticator = new Authenticator(generateNickName(employee), generatedPassword(employee), employee, rol);
         return authenticator;
 
     }

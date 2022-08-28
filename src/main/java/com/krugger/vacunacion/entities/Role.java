@@ -6,7 +6,6 @@ import lombok.Data;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.annotation.PostConstruct;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.UUID;

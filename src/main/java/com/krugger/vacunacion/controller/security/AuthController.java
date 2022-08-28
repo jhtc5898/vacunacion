@@ -19,17 +19,18 @@ import static com.krugger.vacunacion.Utils.GenerateToken.TIEMPO_VIDA;
 @RestController
 public class AuthController {
     AuthenticationManager authManager;
+
     public AuthController(AuthenticationManager authManager) {
-        this.authManager=authManager;
+        this.authManager = authManager;
     }
 
     @PostMapping("login")
     public String login(@RequestParam("user") String user, @RequestParam("pwd") String pwd) {
-        Authentication autentication=authManager.authenticate(new UsernamePasswordAuthenticationToken(user,pwd));
+        Authentication autentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(user, pwd));
         //si el usuario está autenticado, se genera el token
-        if(autentication.isAuthenticated()) {
+        if (autentication.isAuthenticated()) {
             return getToken(autentication);
-        }else {
+        } else {
             return "no autenticado";
         }
     }
@@ -41,7 +42,7 @@ public class AuthController {
         String token = Jwts.builder()
                 .setIssuedAt(new Date()) //fecha creación
                 .setSubject(autentication.getName()) //usuario
-                .claim("authorities",autentication.getAuthorities().stream() //roles
+                .claim("authorities", autentication.getAuthorities().stream() //roles
                         .map(GrantedAuthority::getAuthority)
                         .collect(Collectors.toList()))
                 .setExpiration(new Date(System.currentTimeMillis() + TIEMPO_VIDA)) //fecha caducidad

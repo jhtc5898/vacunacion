@@ -44,10 +44,9 @@ public class EmployeeImplementation implements EmployeeService {
             Employee employee = mappingEmployee(employeeContr);
             log.info(employee.toString());
             employeeRepository.save(employee);
-            Role rol =roleRepository.findByNameAndStatus(EMPLOYEE,Boolean.TRUE);
-            Authenticator auth = generateAutheticator(employee,rol);
+            Role rol = roleRepository.findByNameAndStatus(EMPLOYEE, Boolean.TRUE);
+            Authenticator auth = generateAutheticator(employee, rol);
             authenticatorRepository.save(auth);
-
             return auth;
         } catch (Exception e) {
             log.warn(employeeContr.toString());

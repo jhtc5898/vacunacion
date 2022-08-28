@@ -59,6 +59,7 @@ public class Employee implements Serializable {
     @Column(name = "date_birth")
     private Date date_birth;
 
+
     public Employee() {
 
     }

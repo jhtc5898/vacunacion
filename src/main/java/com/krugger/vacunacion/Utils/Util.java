@@ -6,7 +6,12 @@ import com.krugger.vacunacion.entities.Role;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import java.security.SecureRandom;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
+
+import static com.krugger.vacunacion.Utils.Parameters.DATE_FORMAT;
 
 public class Util {
     public static final Authenticator generateAutheticator(Employee employee, Role rol) {
@@ -25,6 +30,10 @@ public class Util {
 
     public static final String generatedPassword(Employee employee) {
         return RandomStringUtils.random(6, 0, 0, true, true, null, new SecureRandom());
+    }
+
+    public static Date parseDate(String dateStr) throws ParseException {
+        return new SimpleDateFormat(DATE_FORMAT).parse(dateStr);
     }
 
 

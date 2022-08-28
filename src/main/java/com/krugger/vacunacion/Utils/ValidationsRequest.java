@@ -10,6 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.krugger.vacunacion.Utils.Constants.IDENTIFICACTION_SIZE;
+import static com.krugger.vacunacion.Utils.Parameters.DATE_FORMAT;
 
 public class ValidationsRequest {
 
@@ -80,7 +81,7 @@ public class ValidationsRequest {
         boolean correcto = false;
         try {
             //Formato de fecha (día/mes/año)
-            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat formatoFecha = new SimpleDateFormat(DATE_FORMAT);
             formatoFecha.setLenient(false);
             //Comprobación de la fecha
             formatoFecha.parse(date);

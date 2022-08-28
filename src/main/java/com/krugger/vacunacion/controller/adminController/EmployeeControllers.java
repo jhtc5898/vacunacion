@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 import static com.krugger.vacunacion.Utils.Constants.CODE_ERROR_INTERNAL;
+import static com.krugger.vacunacion.Utils.ValidationsRequest.validateDate;
 import static com.krugger.vacunacion.Utils.ValidationsRequest.validation_request;
 import static com.krugger.vacunacion.exceptions.ErrorValidate.errorValidate;
 
@@ -48,7 +49,29 @@ public class EmployeeControllers {
         }
     }
 
+    @GetMapping(value = "/employeeVaccinatedType")
+    public ResponseEntity<Object> employeeVaccinatedType(@RequestParam("type") String name) {
+        try {
+            return ResponseEntity.badRequest().body(employeeService.getNameVaccineEmployee(name));
+        } catch (Exception e) {
+            ErrorRequest errorRequest = new ErrorRequest(e.getCause().getCause().getMessage(), CODE_ERROR_INTERNAL, e.getCause());
+            return ResponseEntity.internalServerError().body(errorRequest);
+        }
+    }
 
+    @GetMapping(value = "/employeeVaccinatedDate")
+    public ResponseEntity<Object> employeeVaccinatedDate(@RequestParam("dateinit") String dateinit, @RequestParam("datefin") String datefin) {
+        try {
+            if (validateDate(dateinit) && validateDate(dateinit)) {
+                return ResponseEntity.badRequest().body(employeeService.getDateVaccineEmployee(dateinit, datefin));
+            }
+            return ResponseEntity.badRequest().body("a");
+
+        } catch (Exception e) {
+            ErrorRequest errorRequest = new ErrorRequest(e.getCause().getCause().getMessage(), CODE_ERROR_INTERNAL, e.getCause());
+            return ResponseEntity.internalServerError().body(errorRequest);
+        }
+    }
 
 
     @GetMapping(value = "/listEmployee")

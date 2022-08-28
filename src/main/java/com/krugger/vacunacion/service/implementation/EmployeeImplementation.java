@@ -15,11 +15,13 @@ import javax.transaction.Transactional;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static com.krugger.vacunacion.Utils.Constants.*;
 import static com.krugger.vacunacion.Utils.Parameters.EMPLOYEE;
 import static com.krugger.vacunacion.Utils.Util.generateAutheticator;
+import static com.krugger.vacunacion.Utils.Util.parseDate;
 import static com.krugger.vacunacion.service.mapping.EmployeeMapping.mappingEmployee;
 
 @Slf4j
@@ -108,13 +110,23 @@ public class EmployeeImplementation implements EmployeeService {
         }
     }
 
-    public Object getVaccineEmployee(Boolean status)
-    {
-        if (!employeeRepository.findAllByStatusAndStatusvaccinated(Boolean.TRUE,status).isEmpty())
-        {
-            return employeeRepository.findAllByStatusAndStatusvaccinated(Boolean.TRUE,status);
+    public Object getVaccineEmployee(Boolean status) {
+        if (!employeeRepository.findAllByStatusAndStatusvaccinated(Boolean.TRUE, status).isEmpty()) {
+            return employeeRepository.findAllByStatusAndStatusvaccinated(Boolean.TRUE, status);
         }
-        return  NOT_INFORMATION;
+        return NOT_INFORMATION;
+    }
+
+    public Object getNameVaccineEmployee(String name) {
+        return vaccineRepository.findAll();
+    }
+
+    public Object getDateVaccineEmployee(String dateinit, String datefin) throws ParseException {
+
+
+        Date init = parseDate(dateinit);
+        Date fin = parseDate(datefin);
+        return vaccineRepository.findDateEmployee(init, fin);
     }
 
 

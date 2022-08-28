@@ -23,10 +23,10 @@ public class Employee implements Serializable {
     private UUID id;
     @Comment("identification document")
     @Column(name = "identification_card", nullable = false, unique = true, length = 10)
-    private String identification_card;
+    private String identificationCard;
     @Comment("Employee first name")
     @Column(name = "first_name", length = 50, nullable = false)
-    private String first_name;
+    private String firstname;
     @Comment("Employee second name")
     @Column(name = "second_name", length = 50, nullable = false)
     private String second_name;
@@ -63,19 +63,19 @@ public class Employee implements Serializable {
 
     }
 
-    public Employee(String identification_card, String first_name, String second_name, String first_surname, String second_surname, String email) {
-        this.identification_card = identification_card;
-        this.first_name = first_name;
+    public Employee(String identificationCard, String firstname, String second_name, String first_surname, String second_surname, String email) {
+        this.identificationCard = identificationCard;
+        this.firstname = firstname;
         this.second_name = second_name;
         this.first_surname = first_surname;
         this.second_surname = second_surname;
         this.email = email;
     }
 
-    public Employee(UUID id, String identification_card, String first_name, String second_name, String first_surname, String second_surname, String email) {
+    public Employee(UUID id, String identificationCard, String firstname, String second_name, String first_surname, String second_surname, String email) {
         this.id = id;
-        this.identification_card = identification_card;
-        this.first_name = first_name;
+        this.identificationCard = identificationCard;
+        this.firstname = firstname;
         this.second_name = second_name;
         this.first_surname = first_surname;
         this.second_surname = second_surname;

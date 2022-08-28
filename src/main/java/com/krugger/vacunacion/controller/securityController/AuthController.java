@@ -1,4 +1,4 @@
-package com.krugger.vacunacion.controller.security;
+package com.krugger.vacunacion.controller.securityController;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

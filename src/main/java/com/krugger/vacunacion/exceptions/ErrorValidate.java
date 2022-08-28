@@ -1,6 +1,7 @@
 package com.krugger.vacunacion.exceptions;
 
-import com.krugger.vacunacion.controller.entitiesController.EmployeeContr;
+import com.krugger.vacunacion.pojo.admin.AddEmployeePojo;
+import com.krugger.vacunacion.pojo.employee.UpdateEmployeePojo;
 import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
@@ -10,24 +11,33 @@ import static com.krugger.vacunacion.Utils.Constants.*;
 import static com.krugger.vacunacion.Utils.ValidationsRequest.*;
 
 public class ErrorValidate {
-    public static ResponseEntity<Object> errorValidate(EmployeeContr employeeContr) {
+    public static ResponseEntity<Object> errorValidate(AddEmployeePojo employeePojo) {
         List<ErrorRequest> listErrorRequest = new ArrayList<>();
 
-        if (!validateName(employeeContr.getFirst_name() +
-                employeeContr.getSecond_name() +
-                employeeContr.getFirst_surname() +
-                employeeContr.getSecond_surname())) {
+        if (!validateName(employeePojo.getFirst_name() +
+                employeePojo.getSecond_name() +
+                employeePojo.getFirst_surname() +
+                employeePojo.getSecond_surname())) {
             listErrorRequest.add(new ErrorRequest(DESCRIPTION_ERROR_NAME, CODE_ERROR_NAME));
         }
 
-        if (!validateIdentification(employeeContr.getIdentification_card())) {
+        if (!validateIdentification(employeePojo.getIdentification_card())) {
             listErrorRequest.add(new ErrorRequest(DESCRIPTION_ERROR_INDENTIFICATION, CODE_ERROR_INDENTIFICATION));
         }
 
-        if (!validateMail(employeeContr.getEmail())) {
+        if (!validateMail(employeePojo.getEmail())) {
             listErrorRequest.add(new ErrorRequest(DESCRIPTION_ERROR_MAIL, CODE_ERROR_MAIL));
         }
         return ResponseEntity.badRequest().body(listErrorRequest);
+    }
+
+    public static ResponseEntity<Object> errorValidate(UpdateEmployeePojo updateEmployeePojo) {
+        List<ErrorRequest> listErrorRequest = new ArrayList<>();
+        if (!validateDate(updateEmployeePojo.getDate_birth())) {
+            listErrorRequest.add(new ErrorRequest(DESCRIPTION_ERROR_DATE, CODE_ERROR_DATE));
+        }
+        return ResponseEntity.badRequest().body(listErrorRequest);
+
     }
 
 }

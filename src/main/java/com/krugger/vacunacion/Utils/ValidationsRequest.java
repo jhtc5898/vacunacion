@@ -1,7 +1,10 @@
 package com.krugger.vacunacion.Utils;
 
-import com.krugger.vacunacion.controller.entitiesController.EmployeeContr;
+import com.krugger.vacunacion.pojo.admin.AddEmployeePojo;
+import com.krugger.vacunacion.pojo.employee.UpdateEmployeePojo;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,21 +12,30 @@ import static com.krugger.vacunacion.Utils.Constants.IDENTIFICACTION_SIZE;
 
 public class ValidationsRequest {
 
-    public static final Boolean general_validation(EmployeeContr employeeContr) {
+    public static final Boolean validation_request(AddEmployeePojo employeePojo) {
 
         if (validateIdentification(
-                employeeContr.getIdentification_card()) &&
-                validateMail(employeeContr.getEmail()) &&
+                employeePojo.getIdentification_card()) &&
+                validateMail(employeePojo.getEmail()) &&
                 validateName(
-                        employeeContr.getFirst_name() +
-                                employeeContr.getSecond_name() +
-                                employeeContr.getFirst_surname() +
-                                employeeContr.getSecond_surname())
+                        employeePojo.getFirst_name() +
+                                employeePojo.getSecond_name() +
+                                employeePojo.getFirst_surname() +
+                                employeePojo.getSecond_surname())
         ) {
             return true;
         }
         return false;
     }
+
+    public static final Boolean validation_request(UpdateEmployeePojo employeePojo) {
+        if (validateDate(employeePojo.getDate_birth()) && validateIdentification(employeePojo.getIdentification_card())) {
+            return Boolean.TRUE;
+        }
+        return false;
+
+    }
+
 
     public static final Boolean validateName(String name) {
 
@@ -53,6 +65,23 @@ public class ValidationsRequest {
             return true;
         }
         return false;
+    }
+
+    public static final Boolean validateDate(String date) {
+        boolean correcto = false;
+        try {
+            //Formato de fecha (día/mes/año)
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+            formatoFecha.setLenient(false);
+            //Comprobación de la fecha
+            formatoFecha.parse(date);
+            correcto = true;
+        } catch (ParseException e) {
+            //Si la fecha no es correcta, pasará por aquí
+            correcto = false;
+        }
+
+        return correcto;
     }
 
 }

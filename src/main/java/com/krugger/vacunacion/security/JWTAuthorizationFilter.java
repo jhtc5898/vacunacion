@@ -61,8 +61,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
      * @return
      */
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-        try
-        {
+        try {
             //el token viene en la cabecera de la petición
             String token = request.getHeader(ENCABEZADO);
             if (token != null) {
@@ -82,9 +81,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
                 return null;
             }
             return null;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             return null;
         }
 

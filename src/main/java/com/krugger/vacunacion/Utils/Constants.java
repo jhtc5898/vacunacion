@@ -5,12 +5,14 @@ public class Constants {
     public static final int IDENTIFICACTION_SIZE = 10;
 
     public static final String ERROR_DATA = "Data error";
-    public static final int CODE_ERROR_INTERNAL = 401;
-    public static final int CODE_ERROR_INDENTIFICATION = 402;
+    public static final int CODE_ERROR_INTERNAL = 600;
+    public static final int CODE_ERROR_INDENTIFICATION = 601;
     public static final String DESCRIPTION_ERROR_INDENTIFICATION = "Validate Identification";
-    public static final int CODE_ERROR_MAIL = 403;
+    public static final int CODE_ERROR_MAIL = 602;
     public static final String DESCRIPTION_ERROR_MAIL = "Validate Mail";
-    public static final int CODE_ERROR_NAME = 404;
+    public static final int CODE_ERROR_NAME = 603;
     public static final String DESCRIPTION_ERROR_NAME = "Validate Name";
+    public static final int CODE_ERROR_DATE = 603;
+    public static final String DESCRIPTION_ERROR_DATE = "Validate Date Format (dd/mm/yyyy)";
 
 }

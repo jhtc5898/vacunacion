@@ -1,4 +1,4 @@
-package com.krugger.vacunacion.controller.entitiesController;
+package com.krugger.vacunacion.pojo.admin;
 
 
 import lombok.Builder;
@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 
 @Data
 @Builder
-public class EmployeeContr {
+public class AddEmployeePojo {
     @Size(min = 10, max = 10, message = "About Me must be between 10 and 10 characters")
     @With
     private String identification_card;

@@ -18,7 +18,7 @@ public class Util {
     public static final String generateNickName(Employee employee) {
         Random r = new Random();
         int cantidadname = r.nextInt(90) + 10;
-        String nickName = employee.getFirst_name() + "." + employee.getFirst_surname() + "." + cantidadname;
+        String nickName = employee.getFirstname() + "." + employee.getFirst_surname() + "." + cantidadname;
 
         return nickName;
     }

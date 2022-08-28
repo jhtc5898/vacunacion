@@ -1,17 +1,17 @@
 package com.krugger.vacunacion.service.mapping;
 
-import com.krugger.vacunacion.controller.entitiesController.EmployeeContr;
 import com.krugger.vacunacion.entities.Employee;
+import com.krugger.vacunacion.pojo.admin.AddEmployeePojo;
 
 public class EmployeeMapping {
-    public static Employee mappingEmployee(EmployeeContr employeeContr) {
+    public static Employee mappingEmployee(AddEmployeePojo employeePojo) {
         Employee employee = new Employee(
-                employeeContr.getIdentification_card(),
-                employeeContr.getFirst_name(),
-                employeeContr.getSecond_name(),
-                employeeContr.getFirst_surname(),
-                employeeContr.getSecond_surname(),
-                employeeContr.getEmail());
+                employeePojo.getIdentification_card(),
+                employeePojo.getFirst_name(),
+                employeePojo.getSecond_name(),
+                employeePojo.getFirst_surname(),
+                employeePojo.getSecond_surname(),
+                employeePojo.getEmail());
         return employee;
 
     }

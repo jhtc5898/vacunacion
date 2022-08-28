@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Serializable> {
     List<Employee> findAll();
-
     Employee findByIdentificationCard(String identification);
+    List<Employee> findAllByStatusAndStatusvaccinated(Boolean status,Boolean statusVaccinated);
 }

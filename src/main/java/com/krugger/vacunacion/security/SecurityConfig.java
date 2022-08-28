@@ -51,6 +51,7 @@ public class SecurityConfig {
         AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
 
         http.csrf().disable().authorizeRequests()
+                //.antMatchers(HttpMethod.POST, "/admin/*").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST, "/admin/addEmployee").hasRole("ADMIN")
                 //.antMatchers("/cliente/*").hasAnyRole("ADMIN", "OPERATOR")
                 //.antMatchers(HttpMethod.PUT, "/curso").authenticated()

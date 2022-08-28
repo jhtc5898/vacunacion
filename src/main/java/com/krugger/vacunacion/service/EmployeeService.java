@@ -19,5 +19,6 @@ public interface EmployeeService {
 
     Object addVaccineEmployee(VaccineEmployeePojo vaccineEmployeePojo);
 
+    Object getVaccineEmployee(Boolean status);
 
 }

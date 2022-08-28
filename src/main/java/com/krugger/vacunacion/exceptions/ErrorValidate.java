@@ -2,7 +2,6 @@ package com.krugger.vacunacion.exceptions;
 
 import com.krugger.vacunacion.pojo.admin.AddEmployeePojo;
 import com.krugger.vacunacion.pojo.employee.UpdateEmployeePojo;
-import com.krugger.vacunacion.pojo.employee.VaccineEmployeePojo;
 import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;

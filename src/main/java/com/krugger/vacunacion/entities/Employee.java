@@ -50,7 +50,7 @@ public class Employee implements Serializable {
     private String status_descripction;
     @Comment("Employe status vaccinated:  1 = Active  2 =Disabled  ")
     @Column(name = "status_vaccinated", length = 1)
-    private Boolean status_vaccinated;
+    private Boolean statusvaccinated;
     @Comment("Employe status vaccinated descripction:    ")
     @Column(name = "vaccinated_descripction", length = 20)
     private String vaccinated_descripction;

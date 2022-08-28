@@ -38,7 +38,7 @@ public class ValidationsRequest {
     }
 
     public static final Boolean validation_request(VaccineEmployeePojo vaccineEmployeePojo) {
-        if ( validateDate(vaccineEmployeePojo.getDateVaccine()) && vaccineEmployeePojo.getNameVaccine() != null && vaccineEmployeePojo.getDosis() != 0){
+        if (validateDate(vaccineEmployeePojo.getDateVaccine()) && vaccineEmployeePojo.getNameVaccine() != null && vaccineEmployeePojo.getDosis() != 0) {
             return Boolean.TRUE;
         }
         return Boolean.FALSE;

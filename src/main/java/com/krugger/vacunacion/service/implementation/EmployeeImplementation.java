@@ -6,7 +6,6 @@ import com.krugger.vacunacion.pojo.admin.AddEmployeePojo;
 import com.krugger.vacunacion.pojo.employee.UpdateEmployeePojo;
 import com.krugger.vacunacion.pojo.employee.VaccineEmployeePojo;
 import com.krugger.vacunacion.repository.*;
-import com.krugger.vacunacion.repository.TipeVaccineRepository;
 import com.krugger.vacunacion.service.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,7 +96,7 @@ public class EmployeeImplementation implements EmployeeService {
             Vaccine vaccine = new Vaccine();
             vaccine.setEmployee(employee);
             vaccine.setTipeVaccine(tipeVaccine);
-            vaccine.setDate_vaccine( new SimpleDateFormat("dd/MM/yyyy").parse(vaccineEmployeePojo.getDateVaccine()));
+            vaccine.setDate_vaccine(new SimpleDateFormat("dd/MM/yyyy").parse(vaccineEmployeePojo.getDateVaccine()));
             vaccine.setNumber_doses(vaccineEmployeePojo.getDosis());
             vaccineRepository.save(vaccine);
 
@@ -109,11 +108,21 @@ public class EmployeeImplementation implements EmployeeService {
         }
     }
 
+    public Object getVaccineEmployee(Boolean status)
+    {
+        if (!employeeRepository.findAllByStatusAndStatusvaccinated(Boolean.TRUE,status).isEmpty())
+        {
+            return employeeRepository.findAllByStatusAndStatusvaccinated(Boolean.TRUE,status);
+        }
+        return  NOT_INFORMATION;
+    }
+
+
     public Employee updateInfoEmployee(UpdateEmployeePojo updateEmployeePojo) throws ParseException {
         Employee employee = employeeRepository.findByIdentificationCard(updateEmployeePojo.getIdentification_card());
         employee.setId(employee.getId());
         employee.setDate_birth(new SimpleDateFormat("dd/MM/yyyy").parse(updateEmployeePojo.getDate_birth()));
-        employee.setStatus_vaccinated(updateEmployeePojo.getStatus_vaccine());
+        employee.setStatusvaccinated(updateEmployeePojo.getStatus_vaccine());
         employeeRepository.save(employee);
         return employee;
 
@@ -144,11 +153,9 @@ public class EmployeeImplementation implements EmployeeService {
         return phone;
     }
 
-    public String messageVaccine(UpdateEmployeePojo updateEmployeePojo)
-    {
-        if(updateEmployeePojo.getStatus_vaccine()==Boolean.TRUE)
-        {
-            return  MESSAGE_VACCINE;
+    public String messageVaccine(UpdateEmployeePojo updateEmployeePojo) {
+        if (updateEmployeePojo.getStatus_vaccine() == Boolean.TRUE) {
+            return MESSAGE_VACCINE;
         }
         return MESSAGE_NOT_VACCINE;
 

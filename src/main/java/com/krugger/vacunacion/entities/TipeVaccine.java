@@ -12,8 +12,7 @@ import java.util.UUID;
 @Entity
 @Data
 @Table(name = "vac_ttipe_vaccine") //manejamos acronimo: 'vac'= esquema  y 'T' = Tabla
-public class TipeVaccine implements Serializable
-{
+public class TipeVaccine implements Serializable {
     private static final long serialVersionUUID = 1L;
 
     @Id

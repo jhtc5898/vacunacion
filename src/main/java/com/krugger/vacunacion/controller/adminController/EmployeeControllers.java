@@ -38,6 +38,18 @@ public class EmployeeControllers {
         }
     }
 
+    @GetMapping(value = "/employeeVaccinatedStatus")
+    public ResponseEntity<Object> employeeVaccinatedStatus(@RequestParam("status") Boolean status) {
+        try {
+            return ResponseEntity.badRequest().body(employeeService.getVaccineEmployee(status));
+        } catch (Exception e) {
+            ErrorRequest errorRequest = new ErrorRequest(e.getCause().getCause().getMessage(), CODE_ERROR_INTERNAL, e.getCause());
+            return ResponseEntity.internalServerError().body(errorRequest);
+        }
+    }
+
+
+
 
     @GetMapping(value = "/listEmployee")
     public List<Employee> listEmployee() {

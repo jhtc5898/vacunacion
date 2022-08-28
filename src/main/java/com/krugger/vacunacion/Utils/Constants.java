@@ -19,4 +19,6 @@ public class Constants {
 
     public static final String MESSAGE_NOT_VACCINE = "Unvaccinated employee";
 
+    public static final String NOT_INFORMATION = "No records of vaccinated employees";
+
 }

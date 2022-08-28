@@ -1,6 +1,6 @@
 package com.krugger.vacunacion.Utils;
 
-import com.krugger.vacunacion.controller.entitiesControllers.EmployeeContr;
+import com.krugger.vacunacion.controller.entitiesController.EmployeeContr;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

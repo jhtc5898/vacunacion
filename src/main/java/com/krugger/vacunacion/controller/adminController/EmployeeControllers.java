@@ -1,7 +1,7 @@
-package com.krugger.vacunacion.controller.admin;
+package com.krugger.vacunacion.controller.adminController;
 
 
-import com.krugger.vacunacion.controller.entitiesControllers.EmployeeContr;
+import com.krugger.vacunacion.controller.entitiesController.EmployeeContr;
 import com.krugger.vacunacion.entities.Employee;
 import com.krugger.vacunacion.exceptions.ErrorRequest;
 import com.krugger.vacunacion.service.EmployeeService;

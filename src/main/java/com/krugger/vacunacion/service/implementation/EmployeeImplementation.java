@@ -1,6 +1,6 @@
 package com.krugger.vacunacion.service.implementation;
 
-import com.krugger.vacunacion.controller.entitiesControllers.EmployeeContr;
+import com.krugger.vacunacion.controller.entitiesController.EmployeeContr;
 import com.krugger.vacunacion.entities.Authenticator;
 import com.krugger.vacunacion.entities.Employee;
 import com.krugger.vacunacion.entities.Role;
@@ -13,11 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 import static com.krugger.vacunacion.Utils.Constants.CODE_ERROR_INTERNAL;
 import static com.krugger.vacunacion.Utils.Parameters.EMPLOYEE;

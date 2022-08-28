@@ -1,5 +1,6 @@
 package com.krugger.vacunacion.Utils;
 
+
 public class Constants {
     public static final int IDENTIFICACTION_SIZE = 10;
 

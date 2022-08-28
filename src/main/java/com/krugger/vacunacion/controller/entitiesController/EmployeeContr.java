@@ -1,4 +1,4 @@
-package com.krugger.vacunacion.controller.entitiesControllers;
+package com.krugger.vacunacion.controller.entitiesController;
 
 
 import lombok.Builder;

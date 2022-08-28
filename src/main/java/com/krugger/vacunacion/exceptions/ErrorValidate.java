@@ -1,6 +1,6 @@
 package com.krugger.vacunacion.exceptions;
 
-import com.krugger.vacunacion.controller.entitiesControllers.EmployeeContr;
+import com.krugger.vacunacion.controller.entitiesController.EmployeeContr;
 import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;

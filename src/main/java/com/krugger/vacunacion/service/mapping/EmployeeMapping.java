@@ -1,6 +1,6 @@
 package com.krugger.vacunacion.service.mapping;
 
-import com.krugger.vacunacion.controller.entitiesControllers.EmployeeContr;
+import com.krugger.vacunacion.controller.entitiesController.EmployeeContr;
 import com.krugger.vacunacion.entities.Employee;
 
 public class EmployeeMapping {

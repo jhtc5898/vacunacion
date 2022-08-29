@@ -21,6 +21,7 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+
 public class SecurityConfig {
 
     @Autowired
@@ -31,6 +32,7 @@ public class SecurityConfig {
             throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
 
     @Bean
     protected InMemoryUserDetailsManager usersDetailsMemory() throws Exception {

@@ -32,7 +32,11 @@ public class PublicController {
     @GetMapping(value = "/informationTypeVaccine")
     public ResponseEntity<Object> informationTypeVaccine() {
         try {
-            return ResponseEntity.badRequest().body(publicService.findAll());
+            if (publicService.findAll() != null) {
+                return ResponseEntity.ok().body(publicService.findAll());
+            }
+            return ResponseEntity.badRequest().body("Sin Informacion Cargada");
+
         } catch (Exception e) {
             ErrorRequest errorRequest = new ErrorRequest(e.getCause().getCause().getMessage(), CODE_ERROR_INTERNAL, e.getCause());
             return ResponseEntity.internalServerError().body(errorRequest);

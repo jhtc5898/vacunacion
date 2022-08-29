@@ -1,4 +1,4 @@
-version: '3'
+version: '3.3'
 
 volumes:
   postgres_data:
@@ -7,10 +7,9 @@ volumes:
 services:
   postgres:
     image: postgres
-    restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./sql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
       POSTGRES_DB: krugger
       POSTGRES_USER: usuario

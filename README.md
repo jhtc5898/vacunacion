@@ -1,20 +1,20 @@
 # Vacunacion
 
 
-## Installation
+## Instalación
 Realizar un git clone del repositorio actual con la rama MAIN en la ruta de su preferencia
 
 
 ```sh
 git clone https://github.com/jhtc5898/vacunacion.git
 ```
-Abri el proyecto en su IDE de preferencia (Desarrollado en IntelliJ IDEA)
+Abrir el proyecto en su IDE de preferencia (Desarrollado en IntelliJ IDEA)
 
 Levantar la base de datos existe 2 opciones
 ## Primera Opcion
 
 Levantar la base de datos en un contenedor:
-En la ubicacion donde esta el fichero encontrara el documento 
+En la ubicación donde está el fichero encontrara el documento
 ```sh
 postgres.yml
 ```
@@ -22,17 +22,25 @@ Levante el contenedor con el siguiente comando:
 ```sh
 docker-compose -f postgres.yml up
 ```
-El contenedor esta configurado para que inicie ejecutando el init.sql que esta en la carpeta [sql]  de esta manera ya tendra generado los roles y empleados de prueba.
-
+El contenedor está configurado para que inicie ejecutando el init.sql que está en la carpeta [sql]  de esta manera ya tendrá generado los roles y empleados de prueba.
 POR LO CUAL SOLO DEBE LEVANTAR EL PROYECTO Y UTILIZAR CON NORMALIDAD
 
 ## Segunda Opcion
-Generar una base de datos con las siguientes caracteristicas 
+Generar una base de datos con las siguientes características:
 ```sh
       POSTGRES_DB: krugger
       POSTGRES_USER: usuario
       POSTGRES_PASSWORD: password
 ```
+o
+
+```sh
+spring.datasource.url=jdbc:postgresql://localhost:5432/krugger?currentSchema=vacunacion
+spring.datasource.username=usuario
+spring.datasource.password=password
+```
+
+
 a continuacion:
 
 Mandamos a correr el script init.sql que se encuentra en la carpeta [sql] 
@@ -40,6 +48,7 @@ Ahora ya podemos iniciar el proyecto:
 LEVANTAR EL PROYECTO Y UTILIZAR CON NORMALIDAD
 
 ## ROLES PREDEFINIDOS
+Estos roles no contienen informacion por lo cual puede ingresar con los mismo y comenzar
 
 | user             | pwd                                       |
 |------------------|-------------------------------------------|
@@ -50,10 +59,10 @@ LEVANTAR EL PROYECTO Y UTILIZAR CON NORMALIDAD
 | ADMIN1           | 123456789          |
 
 
-Se encuentra el diagrama en la carpeta Informacion
+Se encuentra el diagrama en la carpeta Información
 ![Image text](https://github.com/jhtc5898/vacunacion/blob/main/krugger%20-%20vacunacion.png)
 
-## Documentacion Publicada Postman
+## Documentación  Publicada Postman
 * POSTAMN TEST DESACTIVADO JWT
 https://documenter.getpostman.com/view/13910567/VUxLvTzG
 
@@ -61,9 +70,11 @@ https://documenter.getpostman.com/view/13910567/VUxLvTzG
 https://documenter.getpostman.com/view/13910567/VUxLvnnU
 
 ## JWT
-En el caso de querer desactivar el JWT para consultar directamente comentar
+En el caso de querer desactivar el JWT para consultar directamente comentar de la siguiente manera el filterChain
 
-Las lineas de la clase SECURITYCONFIG (Esta confoguracion permite el consumo directo sin JWT)
+
+Las líneas de la clase SECURITYCONFIG (Esta configuración permite el consumo directo sin JWT)
+Parecido a la siguiente:
 ```sh
  @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -87,8 +98,9 @@ En el caso de tener alguna error con las dependencias ejecutar:
 mvn clean install
 ```
 
-En el caso que no se levante el contenedor Docker puede que tenga levantado otro PostGres en su maquina por lo cual seria recomendable cambiar el puerto en el archivo [postgres.ymlv]
-Actual
+En el caso de que no se levante el contenedor Docker puede que tenga levantado otro PostGres en su máquina por lo cual sería recomendable cambiar el puerto en el archivo [postgres.yml]
+
+Actual:
 ```sh
 version: '3.3'
 

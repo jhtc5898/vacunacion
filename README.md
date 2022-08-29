@@ -39,6 +39,11 @@ Mandamos a correr el script init.sql que se encuentra en la carpeta [sql]
 Ahora ya podemos iniciar el proyecto:
 LEVANTAR EL PROYECTO Y UTILIZAR CON NORMALIDAD
 
+
+
+![Diagrama BD](https://github.com/jhtc5898/vacunacion/blob/main/krugger%20-%20vacunacion.png)
+ 
+
 ## Recomendaciones
 En el caso de tener alguna error con las dependencias ejecutar:
 ```sh

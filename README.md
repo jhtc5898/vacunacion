@@ -68,7 +68,8 @@ https://documenter.getpostman.com/view/13910567/VUxLvTzG
 
 * POSTAMN TEST CON JWT
 https://documenter.getpostman.com/view/13910567/VUxLvnnU
-
+* VIDEO
+https://drive.google.com/file/d/13IdGHoYCajQb6m73N4dj8zKKJehinvyG/view?usp=sharing
 ## JWT
 En el caso de querer desactivar el JWT para consultar directamente comentar de la siguiente manera el filterChain
 

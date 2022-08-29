@@ -45,15 +45,27 @@ public class EmployeeImplementation implements EmployeeService {
     @Autowired
     VaccineRepository vaccineRepository;
 
+    /**
+     * Get all employees by active status
+     *
+     * @return
+     */
     @Override
     public Object findAllByStatus() {
         if (!employeeRepository.findAllByStatus(Boolean.TRUE).isEmpty()) {
+            log.info(employeeRepository.findAllByStatus(Boolean.TRUE).toString());
             return employeeRepository.findAllByStatus(Boolean.TRUE);
         }
         return ResponseEntity.ok().body("Sin Informacion");
 
     }
 
+    /**
+     * Get employee information by ID number
+     *
+     * @param identification
+     * @return
+     */
     public Object informationEmployee(String identification) {
         List<Object> resp = new ArrayList<>();
         if (employeeRepository.findByIdentificationCard(identification) != null) {
@@ -71,25 +83,37 @@ public class EmployeeImplementation implements EmployeeService {
             } else {
                 resp.add("Sin Phones Agregados");
             }
+            log.info(resp.toString());
             return resp;
         }
         return ResponseEntity.ok().body("Sin Informacion");
     }
 
-
+    /**
+     * Logical elimination of an employee goes to false state
+     *
+     * @param identification
+     * @return
+     */
     @Transactional
     public Object deleteLogicEmployee(String identification) {
         if (employeeRepository.findByIdentificationCard(identification) != null) {
             Employee employee = employeeRepository.findByIdentificationCard(identification);
             employee.setStatus(Boolean.FALSE);
             employeeRepository.save(employee);
+            log.info(employee.toString());
             return employee;
         }
         return ResponseEntity.ok().body(NOT_EMPLOYEE);
 
     }
 
-
+    /**
+     * Edit basic information of the employee configurable from the POJO
+     *
+     * @param editInformationPojo
+     * @return
+     */
     @Transactional
     public Object editInformationEmployee(EditInformationPojo editInformationPojo) {
         //Buscamos el empleado
@@ -99,12 +123,19 @@ public class EmployeeImplementation implements EmployeeService {
             employee.setEmail(editInformationPojo.getEmail());
             employee.setStatusvaccinated(editInformationPojo.getStatusVaccine());
             employeeRepository.save(employee);
+            log.info(employee.toString());
             return employee;
         }
         return ResponseEntity.ok().body(NOT_EMPLOYEE);
 
     }
 
+    /**
+     * Save new employee with the POJO defined by the challenge
+     *
+     * @param employeePojo
+     * @return
+     */
     @Override
     @Transactional
     public Object saveEmployee(AddEmployeePojo employeePojo) {
@@ -115,6 +146,7 @@ public class EmployeeImplementation implements EmployeeService {
             Role rol = roleRepository.findByNameAndStatus(EMPLOYEE, Boolean.TRUE);
             Authenticator auth = generateAutheticator(employee, rol);
             authenticatorRepository.save(auth);
+            log.info(employee.toString());
             return auth;
         } catch (Exception e) {
             log.warn(employeePojo.toString());
@@ -124,6 +156,12 @@ public class EmployeeImplementation implements EmployeeService {
 
     }
 
+    /**
+     * Update of employee information a pojo to save addresses and telephone numbers
+     *
+     * @param updateEmployeePojo
+     * @return
+     */
     @Override
     @Transactional
     public Object updateEmployee(UpdateEmployeePojo updateEmployeePojo) {
@@ -139,6 +177,8 @@ public class EmployeeImplementation implements EmployeeService {
             listresp.add(employee);
             listresp.add(direction);
             listresp.add(phone);
+
+            log.info(listresp.toString());
             return listresp;
         } catch (Exception e) {
             log.warn(updateEmployeePojo.toString());
@@ -147,6 +187,12 @@ public class EmployeeImplementation implements EmployeeService {
         }
     }
 
+    /**
+     * Aggregation of employee vaccinations, search for the employee by ID.
+     *
+     * @param vaccineEmployeePojo
+     * @return
+     */
     @Transactional
     public Object addVaccineEmployee(VaccineEmployeePojo vaccineEmployeePojo) {
         try {
@@ -160,6 +206,7 @@ public class EmployeeImplementation implements EmployeeService {
                     vaccine.setDate_vaccine(new SimpleDateFormat("dd/MM/yyyy").parse(vaccineEmployeePojo.getDateVaccine()));
                     vaccine.setNumber_doses(vaccineEmployeePojo.getDosis());
                     vaccineRepository.save(vaccine);
+                    log.info(vaccine.toString());
                     return vaccine;
                 }
                 return ResponseEntity.badRequest().body("Correctly enter the type of vaccine");
@@ -173,6 +220,12 @@ public class EmployeeImplementation implements EmployeeService {
         }
     }
 
+    /**
+     * Obtain all employees who are vaccinated by the state
+     *
+     * @param status
+     * @return
+     */
     public Object getVaccineEmployee(Boolean status) {
         if (!employeeRepository.findAllByStatusAndStatusvaccinated(Boolean.TRUE, status).isEmpty()) {
             return employeeRepository.findAllByStatusAndStatusvaccinated(Boolean.TRUE, status);
@@ -180,11 +233,18 @@ public class EmployeeImplementation implements EmployeeService {
         return NOT_INFORMATION;
     }
 
+    /**
+     * Get all employees vaccinated by type of vaccine.Enter a name
+     *
+     * @param name
+     * @return
+     */
     public Object getNameVaccineEmployee(String name) {
         if (tipeVaccineRepository.findByNamevaccine(name) != null) {
             TipeVaccine tipe = tipeVaccineRepository.findByNamevaccine(name);
             if (!vaccineRepository.findAllByTipeVaccine(tipe.getId()).isEmpty()) {
                 List<Vaccine> listvac = vaccineRepository.findAllByTipeVaccine(tipe.getId());
+                log.info(listvac.toString());
                 return listvac;
             } else {
                 return ResponseEntity.badRequest().body(NOT_INFORMATION);
@@ -196,6 +256,14 @@ public class EmployeeImplementation implements EmployeeService {
 
     }
 
+    /**
+     * Obtener los vacunados por fecha de inicio y fin
+     *
+     * @param dateinit
+     * @param datefin
+     * @return
+     * @throws ParseException
+     */
     public Object getDateVaccineEmployee(String dateinit, String datefin) throws ParseException {
 
         Date init = parseDate(dateinit);
@@ -207,6 +275,13 @@ public class EmployeeImplementation implements EmployeeService {
 
     }
 
+    /**
+     * Update of employee information defined by the pojo
+     *
+     * @param updateEmployeePojo
+     * @return
+     * @throws ParseException
+     */
     @Transactional
     public Employee updateInfoEmployee(UpdateEmployeePojo updateEmployeePojo) throws ParseException {
         Employee employee = employeeRepository.findByIdentificationCard(updateEmployeePojo.getIdentification_card());

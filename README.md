@@ -50,8 +50,8 @@ LEVANTAR EL PROYECTO Y UTILIZAR CON NORMALIDAD
 | ADMIN1           | 123456789          |
 
 
-
-![Diagrama BD](https://github.com/jhtc5898/vacunacion/blob/main/krugger%20-%20vacunacion.png)
+Se encuentra el diagrama en la carpeta Informacion
+![Image text](https://github.com/jhtc5898/vacunacion/blob/main/krugger%20-%20vacunacion.png)
 
 ## Documentacion Publicada Postman
 * POSTAMN TEST DESACTIVADO JWT

@@ -39,6 +39,16 @@ Mandamos a correr el script init.sql que se encuentra en la carpeta [sql]
 Ahora ya podemos iniciar el proyecto:
 LEVANTAR EL PROYECTO Y UTILIZAR CON NORMALIDAD
 
+## ROLES PREDEFINIDOS
+
+| user             | pwd                                       |
+|------------------|-------------------------------------------|
+| ADMIN          | 123456789        |
+| empleado1           | 987654321         |
+| empleado2    | 987654321    |
+| empleado3         | 987654321       |
+| ADMIN1           | 123456789          |
+
 
 
 ![Diagrama BD](https://github.com/jhtc5898/vacunacion/blob/main/krugger%20-%20vacunacion.png)
@@ -47,7 +57,29 @@ LEVANTAR EL PROYECTO Y UTILIZAR CON NORMALIDAD
 * POSTAMN TEST DESACTIVADO JWT
 https://documenter.getpostman.com/view/13910567/VUxLvTzG
 
-* POSTAMN TEST CON JWT 
+* POSTAMN TEST CON JWT
+https://documenter.getpostman.com/view/13910567/VUxLvnnU
+
+## JWT
+En el caso de querer desactivar el JWT para consultar directamente comentar
+
+Las lineas de la clase SECURITYCONFIG (Esta confoguracion permite el consumo directo sin JWT)
+```sh
+ @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
+
+        http.csrf().disable().authorizeRequests()
+                //.antMatchers(HttpMethod.POST, "/admin/*").hasRole("ADMIN")
+                //.antMatchers(HttpMethod.POST, "/admin/addEmployee").hasRole("ADMIN")
+                //.antMatchers("/cliente/*").hasAnyRole("ADMIN", "OPERATOR")
+                //.antMatchers(HttpMethod.PUT, "/curso").authenticated()
+                //.antMatchers("/listarP").authenticated()
+                .antMatchers("/listarTv/*").authenticated()
+                .and().apply(MyCustomDsl.customDsl()); // forma de solicitar los credenciales
+        return http.build();
+    }
+```
 
 ## Recomendaciones
 En el caso de tener alguna error con las dependencias ejecutar:
@@ -101,94 +133,6 @@ services:
 
 
 
-## Plugins
-
-Dillinger is currently extended with the following plugins.
-Instructions on how to use them in your own application are linked below.
-
-| Plugin | README |
-| ------ | ------ |
-| Dropbox | [plugins/dropbox/README.md][PlDb] |
-| GitHub | [plugins/github/README.md][PlGh] |
-| Google Drive | [plugins/googledrive/README.md][PlGd] |
-| OneDrive | [plugins/onedrive/README.md][PlOd] |
-| Medium | [plugins/medium/README.md][PlMe] |
-| Google Analytics | [plugins/googleanalytics/README.md][PlGa] |
-
-## Development
-
-Want to contribute? Great!
-
-Dillinger uses Gulp + Webpack for fast developing.
-Make a change in your file and instantaneously see your updates!
-
-Open your favorite Terminal and run these commands.
-
-First Tab:
-
-```sh
-node app
-```
-
-Second Tab:
-
-```sh
-gulp watch
-```
-
-(optional) Third:
-
-```sh
-karma test
-```
-
-#### Building for source
-
-For production release:
-
-```sh
-gulp build --prod
-```
-
-Generating pre-built zip archives for distribution:
-
-```sh
-gulp build dist --prod
-```
-
-## Docker
-
-Dillinger is very easy to install and deploy in a Docker container.
-
-By default, the Docker will expose port 8080, so change this within the
-Dockerfile if necessary. When ready, simply use the Dockerfile to
-build the image.
-
-```sh
-cd dillinger
-docker build -t <youruser>/dillinger:${package.json.version} .
-```
-
-This will create the dillinger image and pull in the necessary dependencies.
-Be sure to swap out `${package.json.version}` with the actual
-version of Dillinger.
-
-Once done, run the Docker image and map the port to whatever you wish on
-your host. In this example, we simply map port 8000 of the host to
-port 8080 of the Docker (or whatever port was exposed in the Dockerfile):
-
-```sh
-docker run -d -p 8000:8080 --restart=always --cap-add=SYS_ADMIN --name=dillinger <youruser>/dillinger:${package.json.version}
-```
-
-> Note: `--capt-add=SYS-ADMIN` is required for PDF rendering.
-
-Verify the deployment by navigating to your server address in
-your preferred browser.
-
-```sh
-127.0.0.1:8000
-```
 
 ## License
 

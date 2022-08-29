@@ -22,30 +22,74 @@ Levante el contenedor con el siguiente comando:
 ```sh
 docker-compose -f postgres.yml up
 ```
-Una vez iniciado el servicio continue con la generacion del script.
+El contenedor esta configurado para que inicie ejecutando el init.sql que esta en la carpeta [sql]  de esta manera ya tendra generado los roles y empleados de prueba.
 
+POR LO CUAL SOLO DEBE LEVANTAR EL PROYECTO Y UTILIZAR CON NORMALIDAD
 
-Ejecutar para obtener todas las dependencias manejadas en el proyecto.
+## Segunda Opcion
+Generar una base de datos con las siguientes caracteristicas 
+```sh
+      POSTGRES_DB: krugger
+      POSTGRES_USER: usuario
+      POSTGRES_PASSWORD: password
+```
+a continuacion:
+
+Mandamos a correr el script init.sql que se encuentra en la carpeta [sql] 
+Ahora ya podemos iniciar el proyecto:
+LEVANTAR EL PROYECTO Y UTILIZAR CON NORMALIDAD
+
+## Recomendaciones
+En el caso de tener alguna error con las dependencias ejecutar:
 ```sh
 mvn clean install
 ```
 
-Dillinger requires [Node.js](https://nodejs.org/) v10+ to run.
-
-Install the dependencies and devDependencies and start the server.
-
+En el caso que no se levante el contenedor Docker puede que tenga levantado otro PostGres en su maquina por lo cual seria recomendable cambiar el puerto en el archivo [postgres.ymlv]
+Actual
 ```sh
-cd dillinger
-npm i
-node app
+version: '3.3'
+
+volumes:
+  postgres_data:
+    driver: local
+
+services:
+  postgres:
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      POSTGRES_DB: krugger
+      POSTGRES_USER: usuario
+      POSTGRES_PASSWORD: password
+    ports:
+      - 5432:5432
+```
+## Cambio de puerto Contenedor 
+```sh
+version: '3.3'
+
+volumes:
+  postgres_data:
+    driver: local
+
+services:
+  postgres:
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      POSTGRES_DB: krugger
+      POSTGRES_USER: usuario
+      POSTGRES_PASSWORD: password
+    ports:
+      - 5433:5432
 ```
 
-For production environments...
 
-```sh
-npm install --production
-NODE_ENV=production node app
-```
 
 ## Plugins
 

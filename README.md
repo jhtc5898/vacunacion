@@ -42,7 +42,12 @@ LEVANTAR EL PROYECTO Y UTILIZAR CON NORMALIDAD
 
 
 ![Diagrama BD](https://github.com/jhtc5898/vacunacion/blob/main/krugger%20-%20vacunacion.png)
- 
+
+## Documentacion Publicada Postman
+* POSTAMN TEST DESACTIVADO JWT
+https://documenter.getpostman.com/view/13910567/VUxLvTzG
+
+* POSTAMN TEST CON JWT 
 
 ## Recomendaciones
 En el caso de tener alguna error con las dependencias ejecutar:
